@@ -1,0 +1,18 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: eureka-server #指定服务名
+eureka:
+  client:
+    registerWithEureka: true #服务注册，是否将自己注册到Eureka服务中
+    fetchRegistry: true  # false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    serviceUrl: #Eureka客户端与Eureka服务端的交互地址，高可用状态配置对方的地址，单机状态配置自己（如果不配置则默认本机8761端口）
+      defaultZone: http://127.0.0.1:8002/eureka/,http://127.0.0.1:8003/eureka/
+  server:
+    enable-self-preservation: true #是否开启自我保护模式
+    eviction-interval-timer-in-ms: 60000 #服务注册表清理间隔（单位毫秒，默认是60*1000）
+  instance:
+    prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port} #指定实例id
